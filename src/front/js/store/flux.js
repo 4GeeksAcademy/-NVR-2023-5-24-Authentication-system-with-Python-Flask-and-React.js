@@ -6,11 +6,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			//"https://nvr-2023-fantastic-doodle-9v4pg5q4xrwc495-3001.preview.app.github.dev/api/pets"
+			// process.env.BACKEND_URL+"api/pets"
 			
 			getAllPets: async() => {
-				const response = await fetch("https://nvr-2023-fantastic-doodle-9v4pg5q4xrwc495-3001.preview.app.github.dev/api/pets");
-				const data = response.json();
-				setStore({pets: data.pets})
+				try {
+					const response = await fetch(process.env.BACKEND_URL+"api/pets");
+					const data = await response.json();
+					setStore({pets: data.pets})
+					}
+				catch (error) {
+					console.log("Error fecthing Pet data:", error)
+				}
+
 			
 			},
 			
