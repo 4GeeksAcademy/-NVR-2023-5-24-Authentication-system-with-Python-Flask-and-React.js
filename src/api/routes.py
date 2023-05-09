@@ -34,3 +34,14 @@ def get_all_pets_by_user(target_user_id):
     pets = Pet.query.filter_by(user_id=target_user.id).all()
     pets_serialized = [pet.serialize() for pet in pets]
     return jsonify({"pets": pets_serialized}), 200
+
+@api.route("/users", methods=["POST"])
+def create_user():
+    body= request.json
+    user_already_exists = User.query.filter_by(email = body["email"] ).first()
+    if user_already_exists:
+        return jsonify({"Message":"Email already in use"}), 301
+    new_user = User(email=body["email"] , password=body["password"], is_active=True)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"Message":"User sucessfully created"}), 200
