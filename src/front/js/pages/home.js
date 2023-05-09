@@ -10,7 +10,7 @@ export const Home = () => {
 			<div className="row">
 				{store.pets && store.pets.map((element) => {
 					return (
-						<div className="col">
+						<div className="col mb-3">
 							<div key={element.id} className="card" style={{ width: "18rem" }}>
 								<div className="card-body text-center">
 									<h5 className="card-title">{element.name}</h5>
