@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
 export const Register = () => {
     const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
     const [credentials, setCredentials] = useState({
         email: "",
         password: ""
@@ -18,15 +20,22 @@ export const Register = () => {
                 },
                 body: JSON.stringify(credentials)
             });
-           
+            if (response.ok) {
+                navigate("/login");
+            }
+
+
         } catch (error) {
             console.error("Error registering user:", error);
         }
     };
 
+
+
     return (
         <div className="container-fluid d-flex justify-content-center">
-            <div className="col-sm-12 col-md-6 col-lg-4">
+            <div className="col-sm-12 col-md-6 col-lg-4 p-3 border">
+                <h2>Register</h2>
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">
                         Email address
@@ -55,7 +64,7 @@ export const Register = () => {
                         onChange={(event) => { setCredentials({ ...credentials, password: event.target.value }) }}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={()=>registerNewUser()}>
+                <button type="submit" className="btn btn-primary" onClick={() => registerNewUser()}>
                     Submit
                 </button>
             </div>
