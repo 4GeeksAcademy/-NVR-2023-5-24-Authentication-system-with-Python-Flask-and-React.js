@@ -32,6 +32,7 @@ class Pet(db.Model):
 
     def serialize(self):
         return {
+            "id": self.id,
             "name": self.name,
             "age": self.age,
         }

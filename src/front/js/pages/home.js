@@ -8,13 +8,20 @@ export const Home = () => {
 	return (
 		<div className="container-fluid">
 			<div className="row">
-				<div className="card" style={{ width: "18rem" }}>
-					<div className="card-body">
-						<h5 className="card-title">Pet name</h5>
-						<h6 className="card-subtitle mb-2 text-muted">Pet age</h6>
-						<p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
-				</div>
+				{store.pets && store.pets.map((element) => {
+					return (
+						<div className="col">
+							<div key={element.id} className="card" style={{ width: "18rem" }}>
+								<div className="card-body text-center">
+									<h5 className="card-title">{element.name}</h5>
+									<h6 className="card-subtitle mb-2 text-muted">{element.age}</h6>
+								</div>
+							</div>
+						</div>
+					)
+				}
+				)
+				}
 
 			</div>
 		</div>

@@ -17,9 +17,20 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/pets', methods=['GET'])
+@api.route("/pets", methods=['GET'])
 def get_all_pets():
 
     pets = Pet.query.all()
+    pets_serialized = [pet.serialize() for pet in pets]
+    return jsonify({"pets": pets_serialized}), 200
+
+@api.route("/pets/<int:target_user_id>", methods=['GET'])
+def get_all_pets_by_user(target_user_id):
+
+    target_user = User.query.filter_by(id=target_user_id).first()
+    if not target_user:
+        return jsonify({"Message": "User not found"}), 404
+    
+    pets = Pet.query.filter_by(user_id=target_user.id).all()
     pets_serialized = [pet.serialize() for pet in pets]
     return jsonify({"pets": pets_serialized}), 200
