@@ -4,6 +4,9 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Pet
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
@@ -17,14 +20,20 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route("/pets", methods=['GET'])
+#GET Endpoints
+
+@api.route("/pets", methods=["GET"])
+@jwt_required()
 def get_all_pets():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user:
+        pets = Pet.query.all()
+        pets_serialized = [pet.serialize() for pet in pets]
+        return jsonify({"pets": pets_serialized}), 200
+    return jsonify({"Message": "User does not exist"}), 401
 
-    pets = Pet.query.all()
-    pets_serialized = [pet.serialize() for pet in pets]
-    return jsonify({"pets": pets_serialized}), 200
-
-@api.route("/pets/<int:target_user_id>", methods=['GET'])
+@api.route("/pets/<int:target_user_id>", methods=["GET"])
 def get_all_pets_by_user(target_user_id):
 
     target_user = User.query.filter_by(id=target_user_id).first()
@@ -34,6 +43,15 @@ def get_all_pets_by_user(target_user_id):
     pets = Pet.query.filter_by(user_id=target_user.id).all()
     pets_serialized = [pet.serialize() for pet in pets]
     return jsonify({"pets": pets_serialized}), 200
+
+@api.route("/users", methods=["GET"])
+def get_all_users():
+    users = User.query.all()
+    users_serialized = [user.serialize() for user in users]
+    return jsonify({"users": users_serialized}), 200
+     
+
+#POST endpoints
 
 @api.route("/users", methods=["POST"])
 def create_user():
@@ -45,3 +63,13 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"Message":"User sucessfully created"}), 200
+
+@api.route("/login", methods=["POST"])
+def login():
+    body= request.json
+    user = User.query.filter_by(email = body["email"], password= body["password"]  ).first()
+    if user:
+        token = create_access_token(identity=user.id)
+        return jsonify({"Message":"token delivered", "token":token}), 200
+    
+    return jsonify({"Message":"Could not deliver token"}), 401
