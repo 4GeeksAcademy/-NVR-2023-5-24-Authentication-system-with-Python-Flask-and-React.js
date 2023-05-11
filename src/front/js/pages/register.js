@@ -10,8 +10,8 @@ export const Register = () => {
         email: "",
         password: ""
     });
-    
-    
+
+
     const registerNewUser = async () => {
         try {
             const response = await fetch(process.env.BACKEND_URL + "api/users", {
@@ -32,40 +32,38 @@ export const Register = () => {
     };
 
     return (
-        <div className="container-fluid d-flex justify-content-center">
-            <div className="col-sm-12 col-md-6 col-lg-4 p-3 border">
-                <form>
-                    <h2>Register</h2>
+        <div className="container-fluid d-flex justify-content-center align-items-center vh-100">
+            <div className="col-sm-12 col-md-6 col-lg-4 p-3 Form-wrapper">
+                <form className="Form-register py-3">
+                    <h2 className="Login-title">Register</h2>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">
-                            Email address
-                        </label>
                         <input
                             type="email"
+                            placeholder="Enter email"
                             className="form-control"
                             id="exampleInputEmail1"
                             aria-describedby="emailHelp"
                             value={credentials.email}
                             onChange={(event) => { setCredentials({ ...credentials, email: event.target.value }) }}
                         />
-                        <div id="emailHelp" className="form-text">
-                            We'll never share your email with anyone else.
-                        </div>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">
-                            Password
-                        </label>
                         <input
                             type="password"
+                            placeholder="Enter password"
                             className="form-control"
                             id="exampleInputPassword1"
                             value={credentials.password}
                             onChange={(event) => { setCredentials({ ...credentials, password: event.target.value }) }}
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary" onClick={() => registerNewUser()}>
-                        Submit
+                    <button
+                        type="submit"
+                        className={`btn ${credentials.email && credentials.password ? "btn btn-dark" : "btn btn-outline-dark italic"} w-100`}
+                        onClick={() => registerNewUser()}
+                        disabled={!credentials.email || !credentials.password}
+                    >
+                        {credentials.email && credentials.password ? "Register" : "Email and password required to register"}
                     </button>
                 </form>
             </div>

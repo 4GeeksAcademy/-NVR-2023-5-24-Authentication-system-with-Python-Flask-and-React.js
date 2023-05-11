@@ -1,7 +1,82 @@
-/*
-    home.css: This website contains selectors only used in home.css
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap');
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+body {
+    background: black;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.home-wrapper {
+    text-align: left;
+}
+
+.home-title {
+    font-style: bold;
+    font-weight: 900;
+    font-size: 7rem;
+}
+
+.home-subtitle {
+    font-style: bold;
+    font-weight: 900;
+    font-size: 3rem;
+}
+
+.Form-login {
+    padding: 1.6rem;
+    background: green;
+    border: none;
+    border-radius: 7px;
+}
+
+.Form-register {
+    padding: 1.6rem;
+    background: rgb(184, 184, 2);
+    border: none;
+    border-radius: 7px;
+}
+
+::placeholder {
+    font-style: italic;
+    font-size: .7rem;
+}
+
+.italic {
+    font-style:italic;
+}
+
+.Link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.User-label {
+    color: white;
+    padding-bottom: .3rem;
+    border-bottom: 1px solid white;
+}
+
+.Login-label {
+    color: green !important;
+}
+
+.Register-label {
+    color: yellow !important;
+}
+
+.Link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.Login {
+    color: black;
+}
+
+.Login-title {
+    font-weight: 900;
+}
+
+.Logout {
+    color: red;
+}

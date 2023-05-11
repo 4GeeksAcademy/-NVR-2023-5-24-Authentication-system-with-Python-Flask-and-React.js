@@ -1,30 +1,38 @@
 import React, { useContext , useEffect } from "react";
 import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 
 export const Home = () => {
-    const { store, actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
 
-    useEffect( () => {actions.getAllPets()},  [store.token])
-    
-    return (
-        <div className="container-fluid">
-            <div className="row">
-                {store.pets && store.pets.length > 0 ? store.pets.map((element) => {
-                    return (
-                        <div className="col mb-3">
-                            <div key={element.id} className="card" style={{ width: "18rem" }}>
-                                <div className="card-body text-center">
-                                    <h5 className="card-title">{element.name}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">{element.age}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                }) : <div>Pets cannot be displayed</div>
-                }
+  useEffect(() => {
+    if (store.token && store.token !== "") {
+      navigate("/private");
+    }
+  }, [store.token]);
 
-            </div>
+  return (
+    <div className="container-fluid ms-3 mt-5">
+      <div className="d-flex flex-column my-3 mx-3 home-wrapper">
+        <div className="home-title m-1">Hello.</div>
+        <div className="home-subtitle m-1">
+          {store.user ? "Browse your content freely." : (
+            <>
+              Please{" "}
+              <Link to="/login" className="Link Login-label">
+                login
+              </Link>{" "}
+              or{" "}
+              <Link to="/register" className="Link Register-label">
+                register
+              </Link>
+              .
+            </>
+          )}
         </div>
-    );
+      </div>
+    </div>
+  );
 };

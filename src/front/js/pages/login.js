@@ -24,9 +24,9 @@ export const Login = () => {
 			if (response.ok) {
 				const data = await response.json();
 				localStorage.setItem("token", data.token);
-				store.token= data.token;
-				store.user=email;
-				navigate("/");
+				store.token = data.token;
+				store.user = email;
+				navigate("/private");
 			} else {
 				throw new Error("Unable to retrieve token");
 			}
@@ -35,43 +35,42 @@ export const Login = () => {
 		}
 	};
 
-
-
 	return (
-		<div className="container-fluid d-flex justify-content-center">
-			<div className="col-sm-12 col-md-6 col-lg-4 p-3 border">
-				<h2>Login</h2>
-				<div className="mb-3">
-					<label htmlFor="exampleInputEmail1" className="form-label">
-						Email address
-					</label>
-					<input
-						type="email"
-						className="form-control"
-						id="exampleInputEmail1"
-						aria-describedby="emailHelp"
-						value={credentials.email}
-						onChange={(event) => { setCredentials({ ...credentials, email: event.target.value }) }}
-					/>
-					<div id="emailHelp" className="form-text">
-						We'll never share your email with anyone else.
+		<div className="container-fluid d-flex justify-content-center align-items-center vh-100">
+			<div className="col-sm-12 col-md-6 col-lg-4 p-3">
+				<form className="Form-login py-3">
+					<h2 className="Login-title">Login</h2>
+					<div className="mb-3">
+
+						<input
+							type="email"
+							placeholder="Enter email"
+							className="form-control"
+							id="exampleInputEmail1"
+							aria-describedby="emailHelp"
+							value={credentials.email}
+							onChange={(event) => { setCredentials({ ...credentials, email: event.target.value }) }}
+						/>
 					</div>
-				</div>
-				<div className="mb-3">
-					<label htmlFor="exampleInputPassword1" className="form-label">
-						Password
-					</label>
-					<input
-						type="password"
-						className="form-control"
-						id="exampleInputPassword1"
-						value={credentials.password}
-						onChange={(event) => { setCredentials({ ...credentials, password: event.target.value }) }}
-					/>
-				</div>
-				<button type="submit" className="btn btn-primary" onClick={() => handleLogin()}>
-					Login
-				</button>
+					<div className="mb-3">
+						<input
+							type="password"
+							placeholder="Enter password"
+							className="form-control"
+							id="exampleInputPassword1"
+							value={credentials.password}
+							onChange={(event) => { setCredentials({ ...credentials, password: event.target.value }) }}
+						/>
+					</div>
+					<button
+						type="submit"
+						className={`btn ${credentials.email && credentials.password ? "btn btn-dark" : "btn btn-outline-light italic"} w-100`}
+						onClick={() => handleLogin()}
+						disabled={!credentials.email || !credentials.password}
+					>
+						{credentials.email && credentials.password ? "Login" : "Email and password required to login"}
+					</button>
+				</form>
 			</div>
 		</div>
 	);
