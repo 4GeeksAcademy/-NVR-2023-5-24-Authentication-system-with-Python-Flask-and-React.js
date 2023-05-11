@@ -11,14 +11,30 @@ export const Login = () => {
 		password: ""
 	});
 
-	const loginUser = async () => {
+	const handleLogin = async () => {
+		const { email, password } = credentials;
+		const response = await fetch(process.env.BACKEND_URL + "api/login", {
+			method: "POST",
+			headers: {
+				"Content-type": "application/json",
+			},
+			body: JSON.stringify({ email, password }),
+		});
 		try {
-			await actions.login(credentials.email, credentials.password);
-			navigate("/");
+			if (response.ok) {
+				const data = await response.json();
+				localStorage.setItem("token", data.token);
+				store.token= data.token;
+				store.user=email;
+				navigate("/");
+			} else {
+				throw new Error("Unable to retrieve token");
+			}
 		} catch (error) {
 			console.error("Error logging in:", error);
 		}
 	};
+
 
 
 	return (
@@ -53,7 +69,7 @@ export const Login = () => {
 						onChange={(event) => { setCredentials({ ...credentials, password: event.target.value }) }}
 					/>
 				</div>
-				<button type="submit" className="btn btn-primary" onClick={() => loginUser()}>
+				<button type="submit" className="btn btn-primary" onClick={() => handleLogin()}>
 					Login
 				</button>
 			</div>

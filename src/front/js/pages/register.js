@@ -10,7 +10,8 @@ export const Register = () => {
         email: "",
         password: ""
     });
-
+    
+    
     const registerNewUser = async () => {
         try {
             const response = await fetch(process.env.BACKEND_URL + "api/users", {
