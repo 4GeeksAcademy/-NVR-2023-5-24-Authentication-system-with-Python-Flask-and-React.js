@@ -11,37 +11,12 @@ export const Login = () => {
 		password: ""
 	});
 
-	const handleLogin = async () => {
-		const { email, password } = credentials;
-		const response = await fetch(process.env.BACKEND_URL + "api/login", {
-			method: "POST",
-			headers: {
-				"Content-type": "application/json",
-			},
-			body: JSON.stringify({ email, password }),
-		});
-		try {
-			if (response.ok) {
-				const data = await response.json();
-				localStorage.setItem("token", data.token);
-				store.token = data.token;
-				store.user = email;
-				navigate("/private");
-			} else {
-				throw new Error("Unable to retrieve token");
-			}
-		} catch (error) {
-			console.error("Error logging in:", error);
-		}
-	};
-
 	return (
 		<div className="container-fluid d-flex justify-content-center align-items-center vh-100">
 			<div className="col-sm-12 col-md-6 col-lg-4 p-3">
 				<form className="Form-login py-3">
 					<h2 className="Login-title">Login</h2>
 					<div className="mb-3">
-
 						<input
 							type="email"
 							placeholder="Enter email"
@@ -65,7 +40,10 @@ export const Login = () => {
 					<button
 						type="submit"
 						className={`btn ${credentials.email && credentials.password ? "btn btn-dark" : "btn btn-outline-light italic"} w-100`}
-						onClick={() => handleLogin()}
+						onClick={() => {
+							actions.handleLogin(credentials);
+							navigate("/private");
+						}}
 						disabled={!credentials.email || !credentials.password}
 					>
 						{credentials.email && credentials.password ? "Login" : "Email and password required to login"}

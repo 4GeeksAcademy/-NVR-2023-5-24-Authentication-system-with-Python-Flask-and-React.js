@@ -34,6 +34,7 @@ def get_all_pets():
     return jsonify({"Message": "User does not exist"}), 401
 
 @api.route("/pets/<int:target_user_id>", methods=["GET"])
+@jwt_required()
 def get_all_pets_by_user(target_user_id):
 
     target_user = User.query.filter_by(id=target_user_id).first()

@@ -8,15 +8,18 @@ export const Private = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPets = async () => {
-      if (!store.user || store.user === "") {
+
+    const initialize = async () => {
+      if (!actions.isLoggedIn()) {
         navigate("/");
       } else {
-        await actions.getAllPets();
+        await actions.getAllPetsByCurrentUser();
       }
     }
-    fetchPets();
-  }, [store.user]);
+
+    initialize();
+  }, [store.token]);
+  
 
   return (
     <div className="container-fluid">
@@ -24,13 +27,11 @@ export const Private = () => {
         {store.pets && store.pets.length > 0 ? (
           store.pets.map((element) => {
             return (
-              <div className="col mb-3" key={element.id}>
-                <div className="card" style={{ width: "18rem" }}>
-                  <div className="card-body text-center">
-                    <h5 className="card-title">{element.name}</h5>
-                    <h6 className="card-subtitle mb-2 text-muted">
-                      {element.age}
-                    </h6>
+              <div className="col-sm-12 col-md-4 col-lg-2 mb-3" key={element.id}>
+                <div className="card Card-wrapper">
+                  <div className="card-header Card-header">{element.name}</div>
+                  <div className="card-body Card-body">
+                    <p className="card-text Card-subtitle ">{element.age}</p>
                   </div>
                 </div>
               </div>

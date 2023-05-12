@@ -11,26 +11,6 @@ export const Register = () => {
         password: ""
     });
 
-
-    const registerNewUser = async () => {
-        try {
-            const response = await fetch(process.env.BACKEND_URL + "api/users", {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(credentials)
-            });
-            if (response.ok) {
-                navigate("/login");
-            }
-
-
-        } catch (error) {
-            console.error("Error registering user:", error);
-        }
-    };
-
     return (
         <div className="container-fluid d-flex justify-content-center align-items-center vh-100">
             <div className="col-sm-12 col-md-6 col-lg-4 p-3 Form-wrapper">
@@ -60,7 +40,11 @@ export const Register = () => {
                     <button
                         type="submit"
                         className={`btn ${credentials.email && credentials.password ? "btn btn-dark" : "btn btn-outline-dark italic"} w-100`}
-                        onClick={() => registerNewUser()}
+                        onClick={() => {
+                            actions.registerNewUser(credentials);
+                            navigate("/login");
+                            }
+                        }
                         disabled={!credentials.email || !credentials.password}
                     >
                         {credentials.email && credentials.password ? "Register" : "Email and password required to register"}

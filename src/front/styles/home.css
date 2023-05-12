@@ -80,3 +80,30 @@ body {
 .Logout {
     color: red;
 }
+
+.Card-warapper {
+  
+    width: 18rem;
+    background: rgb(92, 92, 92);
+}
+
+.Card-header {
+    border: none;
+    background: rgb(31, 2, 66);
+    color: white;
+}
+
+.Card-subtitle {
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: green;
+    color: white;
+}
+
+.Card-body {
+    background:rgb(92, 92, 92);
+}

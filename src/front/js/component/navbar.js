@@ -11,12 +11,6 @@ export const Navbar = () => {
 		setUser(store.user);
 	}, [store.user]);
 
-	const handleLogOut = () => {
-		setUser("");
-		actions.logout();
-		navigate("/");
-	};
-
 	return (
 		<nav className="navbar g-0 Navigation">
 			<div className="container my-3">
@@ -29,7 +23,10 @@ export const Navbar = () => {
 					{user !== null && user !== undefined && user !== "" ? (
 						<>
 							<span className="mx-1 User-label"><Link className="Link" to="/private">{user}</Link></span>
-							<button className="btn btn-outline-danger mx-1 Logout" onClick={handleLogOut}>
+							<button className="btn btn-outline-danger mx-1 Logout" onClick={() => {
+								actions.handleLogOut();
+								navigate("/private");
+								}}>
 								Logout
 							</button>
 						</>
