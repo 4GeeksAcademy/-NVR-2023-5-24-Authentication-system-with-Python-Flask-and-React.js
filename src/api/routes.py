@@ -10,7 +10,6 @@ from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
-
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -68,9 +67,9 @@ def create_user():
 @api.route("/login", methods=["POST"])
 def login():
     body= request.json
-    user = User.query.filter_by(email = body["email"], password= body["password"]  ).first()
+    user = User.query.filter_by(email=body["email"], password=body["password"]).first()
     if user:
         token = create_access_token(identity=user.id)
-        return jsonify({"Message":"token delivered", "token":token}), 200
+        return jsonify({"Message": "Token delivered", "token": token, "user_id": user.id}), 200
     
-    return jsonify({"Message":"Could not deliver token"}), 401
+    return jsonify({"Message": "Token could not be delivered"}), 401

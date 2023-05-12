@@ -15,7 +15,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getUserIdFromToken: () => {
-				return 2;
+				const target_user_id = localStorage.getItem("user_id");
+				if(target_user_id) return(target_user_id);
+				return null;
 			},
 
 			registerNewUser: async (credentials) => {
@@ -49,6 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.ok) {
 						const data = await response.json();
 						localStorage.setItem("token", data.token);
+						localStorage.setItem("user_id", data.user_id);
 						setStore({ token: data.token, user: credentials.email });
 						return true;
 					} else {
@@ -64,6 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			handleLogOut: () => {
 				setStore({ user: "", token: "" });
 				localStorage.removeItem("token");
+				localStorage.removeItem("user_id");
 				return true;
 			},
 
