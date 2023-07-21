@@ -2,7 +2,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			pets: [],
+			pets: null,
 			token: "",
 			user: ""
 

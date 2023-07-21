@@ -5,11 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 export const Navbar = () => {
 	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
-	const [user, setUser] = useState(store.user);
 
-	useEffect(() => {
-		setUser(store.user);
-	}, [store.user]);
+
 
 	return (
 		<nav className="navbar g-0 Navigation">
@@ -20,9 +17,9 @@ export const Navbar = () => {
 					</span>
 				</Link>
 				<div className="ml-auto">
-					{user !== null && user !== undefined && user !== "" ? (
+					{store.user !== null && store.user !== undefined && store.user !== "" ? (
 						<>
-							<span className="mx-1 User-label"><Link className="Link" to="/private">{user}</Link></span>
+							<span className="mx-1 User-label"><Link className="Link" to="/private">{store.user}</Link></span>
 							<button className="btn btn-outline-danger mx-1 Logout" onClick={() => {
 								actions.handleLogOut();
 								navigate("/private");

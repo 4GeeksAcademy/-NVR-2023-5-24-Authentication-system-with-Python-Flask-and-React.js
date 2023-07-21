@@ -20,6 +20,10 @@ const injectContext = PassedComponent => {
 					})
 			})
 		);
+		
+		useEffect(()=>  {
+			state.actions.isLoggedIn();
+		}, [] )
 
 		return (
 			<Context.Provider value={state}>

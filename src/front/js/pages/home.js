@@ -11,10 +11,10 @@ export const Home = () => {
     <div className="container-fluid ms-3 mt-5">
       <div className="d-flex flex-column my-3 mx-3 home-wrapper">
         <div className="home-title m-1">
-          Hello{store.user && store.user !== "" ? `, ${store.user}` : null}.
+          Welcome back{store.user && store.user !== "" ? `, ${store.user}` : null}!
         </div>
         <div className="home-subtitle m-1">
-          {actions.isLoggedIn() ? "Browse your content at will" : (
+          {actions.isLoggedIn() ? "You can now browse your conetnt." : (
             <>
               Please{" "}
               <Link to="/login" className="Link Login-label">

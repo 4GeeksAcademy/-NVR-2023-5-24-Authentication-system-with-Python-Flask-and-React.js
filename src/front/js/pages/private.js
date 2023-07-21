@@ -24,7 +24,7 @@ export const Private = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {store.pets && store.pets.length > 0 ? (
+        {!store.pets ? "loading" :store.pets.length > 0 ? (
           store.pets.map((element) => {
             return (
               <div className="col-sm-12 col-md-4 col-lg-2 mb-3" key={element.id}>
