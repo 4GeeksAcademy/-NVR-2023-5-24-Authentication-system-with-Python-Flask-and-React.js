@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/home.css";
@@ -14,19 +14,21 @@ export const Home = () => {
           Welcome back{store.user && store.user !== "" ? `, ${store.user}` : null}!
         </div>
         <div className="home-subtitle m-1">
-          {actions.isLoggedIn() ? "You can now browse your conetnt." : (
-            <>
-              Please{" "}
-              <Link to="/login" className="Link Login-label">
-                login
-              </Link>{" "}
-              or{" "}
-              <Link to="/register" className="Link Register-label">
-                register
-              </Link>
-              .
-            </>
-          )}
+          {store.user && store.user !== ""
+            ? "You can now browse your content."
+            : (
+              <>
+                Please{" "}
+                <Link to="/login" className="Link Login-label">
+                  login
+                </Link>{" "}
+                or{" "}
+                <Link to="/register" className="Link Register-label">
+                  register
+                </Link>
+                .
+              </>
+            )}
         </div>
       </div>
     </div>
